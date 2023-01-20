@@ -26,6 +26,11 @@ const users = {
           job: 'Bouncer',
        },
        {
+          id : 'otherMac', 
+          name: 'Mac',
+          job: 'Bouncer',
+       },
+       {
           id : 'ppp222', 
           name: 'Mac',
           job: 'Professor',
@@ -43,11 +48,9 @@ const users = {
     ]
 }
 
-app.get('/users', (req, res) => {
-    res.send(users);
-});
 
-/* filter by name */
+/* 
+// filter by name
 app.get('/users', (req, res) => {
     const name = req.query.name;
     if (name != undefined) {
@@ -63,9 +66,9 @@ app.get('/users', (req, res) => {
 const findUserByName = (name) => {
     return users['users_list'].filter( (user) => user['name'] === name);
 }
+*/
 
-
-/* id GET endpoint */
+// id GET endpoint 
 app.get('/users/:id', (req, res) => {
     const id = req.params['id']; //or req.params.id
     let result = findUserById(id);
@@ -82,6 +85,7 @@ function findUserById(id) {
     //return users['users_list'].filter( (user) => user['id'] === id);
 }
 
+
 /* POST */
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
@@ -91,4 +95,47 @@ app.post('/users', (req, res) => {
 
 function addUser(user){
     users['users_list'].push(user);
+}
+
+/* DELETE */
+app.delete('/users/:id', (req, res) => {
+    const id = req.params['id']
+    const userToDelete = findUserById(id)
+    if (userToDelete === undefined) {
+        res.status(200).end();
+    }
+    else {
+        deleteUser(userToDelete);
+        res.status(204).end();
+    }
+});
+
+function deleteUser(userToDelete){
+    const index = users['users_list'].indexOf(userToDelete)
+    if(index < 0 || index > users['users_list'].length)
+        res.status(200).end();
+    else
+        users['users_list'].splice(index, 1);
+}
+
+/* STEP 7 */
+app.get('/users', (req, res) => {
+    const name = req.query['name'];
+    const job = req.query['job'];
+    const list = getUsers(name, job);
+    if (list.length === 0)
+        res.status(404).send('Resource not found.');
+    else {
+        res.send(list);
+    }
+});
+
+function getUsers(name, job) {
+    const list = [];
+    users['users_list'].forEach( (user) => {
+        if(user['name'] === name && user['job'] === job) {
+            list.push(user);
+        }
+    })
+    return list
 }
