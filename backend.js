@@ -84,12 +84,15 @@ function findUserById(id) {
 /* POST */
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.status(200).end();
+    length = addUser(userToAdd);
+    if (length === undefined)
+        res.status(204).end();
+    else
+        res.status(201).end();
 });
 
 function addUser(user){
-    users['users_list'].push(user);
+    return users['users_list'].push(user);
 }
 
 /* DELETE */
