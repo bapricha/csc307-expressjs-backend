@@ -28,11 +28,6 @@ const users = {
           job: 'Bouncer',
        },
        {
-          id : 'otherMac', 
-          name: 'Mac',
-          job: 'Bouncer',
-       },
-       {
           id : 'ppp222', 
           name: 'Mac',
           job: 'Professor',
