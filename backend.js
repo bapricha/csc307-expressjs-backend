@@ -92,7 +92,7 @@ app.post('/users', (req, res) => {
     if (length === undefined)
         res.status(204).end();
     else
-        res.status(201).end();
+        res.status(201).send(record);
 });
 
 function addUser(user){
