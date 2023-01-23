@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = 5000;
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -49,7 +51,6 @@ const users = {
 }
 
 
-/* 
 // filter by name
 app.get('/users', (req, res) => {
     const name = req.query.name;
@@ -66,7 +67,6 @@ app.get('/users', (req, res) => {
 const findUserByName = (name) => {
     return users['users_list'].filter( (user) => user['name'] === name);
 }
-*/
 
 // id GET endpoint 
 app.get('/users/:id', (req, res) => {
@@ -118,7 +118,7 @@ function deleteUser(userToDelete){
         users['users_list'].splice(index, 1);
 }
 
-/* STEP 7 */
+/* STEP 7 
 app.get('/users', (req, res) => {
     const name = req.query['name'];
     const job = req.query['job'];
@@ -138,4 +138,4 @@ function getUsers(name, job) {
         }
     })
     return list
-}
+}*/
