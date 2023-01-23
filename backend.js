@@ -83,8 +83,12 @@ function findUserById(id) {
 
 /* POST */
 app.post('/users', (req, res) => {
-    const userToAdd = req.body;
-    length = addUser(userToAdd);
+    const record = req.body;
+    record['id'] = generateRandID();
+    /*const existingID = record['id'];
+    if( existingID === undefined )
+        generateRandID();*/
+    length = addUser(record);
     if (length === undefined)
         res.status(204).end();
     else
@@ -94,6 +98,25 @@ app.post('/users', (req, res) => {
 function addUser(user){
     return users['users_list'].push(user);
 }
+
+function generateRandID() {
+    var id = '';
+    const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    const numb = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    var ctr = 0;
+    while(ctr < 3) {
+        i = Math.floor(Math.random() * alpha.length);
+        id += alpha[i];
+        ctr++;
+    }
+    while(ctr < 6) {
+        i = Math.floor(Math.random() * numb.length);
+        id += numb[i];
+        ctr++;
+    }
+    return id;
+}
+
 
 /* DELETE */
 app.delete('/users/:id', (req, res) => {
